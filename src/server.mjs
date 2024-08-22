@@ -4,6 +4,8 @@ import {writeFileSync} from 'fs';
 import {existsSync, readFileSync, statSync, statfsSync} from 'fs';
 import { URL } from 'node:url'; // in Browser, the URL in native accessible on window
 import markdown, { getCodeString } from '@wcj/markdown-to-html';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+
 
 const __filename = new URL('', import.meta.url).pathname;
 // Will contain trailing slash
@@ -222,6 +224,11 @@ class Server {
         });
     };
 
+    proxy(path,target) {
+        this.logger.log('[f_warning]', chalk.bold.yellow('WARN!'), 'proxy() methods are not handled by this server, no options will be added ')
+        this.app.use(path,createProxyMiddleware({target: target,changeOrigin:false}));
+    };
+
     /**
      * @param path {string}
      * @param func {(req: express.Request, res: express.Response) => any}
@@ -294,6 +301,12 @@ code {
 <div style="text-align:center;"> No Content Found </div>
             `);
         return res.status(200).send(markdown(readFileSync(file,'utf-8')) + '\n!END-OF-FILE-MARKDOWN\n<style>a { color: var(--red2); }\na:visited { color: var(--yellow); }\n' + styles_md + '\n</style>');
+    });
+    server.get('/git', (req, res) => {
+        res.redirect('https://github.com/catriverr/gmeng-sdk');
+    });
+    server.get('/site-git', (req, res) => {
+        res.redirect('https://github.com/catriverr/gmeng-org');
     });
 };
 

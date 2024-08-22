@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    --red: red;
+    --red2: rgb(204, 36, 29);
+    --yellow: #FFD230;
+    --black2: rgb(60,60,60);
+    --black: rgb(40, 40, 40);
+    --white: rgb(224,209,170);
+    --blue: rgb(131, 165, 152);
+}
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: var(--black2);
+    color: var(--white);
+}
+
+#bar-container {
+    vertical-align: middle;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--black);
+}
+
+
+#logo-short {
+    vertical-align: middle;
+    display: inline;
+    margin-left: 5px;
+    max-width: 40px;
+}
+
+#logo-clicks {
+    display: inline;
+}
+
+#logo-text {
+    margin-left: 12px;
+    vertical-align: middle;
+    display: inline;
+    font-size: 24px;
+    font-weight: 450;
+    color: var(--white);
+    text-decoration: inherit;
+}
+
+#logo-clicks:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#gradient {
+    z-index: 55555;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 10px;
+    font-size: 50px;
+    background-image: linear-gradient(to right, var(--red), var(--yellow));
+}
+
+#menu-buttons {
+    display: inline;
+}
+
+.menubutton {
+    display: inline;
+    width: 20px;
+    height: 17px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    object-fit: contain;
+    overflow: hidden;
+    float: right;
+    border: 1.5px solid #6B6B68;
+    vertical-align: bottom;
+    border-radius: 6px;
+    margin-top: 5px;
+    opacity: 0.7;
+    transition: 0.15s all;
+}
+
+#search-button {
+    margin-right: 15px;
+}
+
+#search-button:hover {
+    opacity: 1;
+    background-color: var(--red2);
+    cursor: pointer;
+}
+
+#menubutton-container {
+    display: inline;
+}
+
+#search-close {
+    max-width: 20px;
+    transition: 0.3s filter;
+    margin-top: 10.5px;
+    position: fixed;
+    right: 10px;
+    display: none;
+    filter: invert(52%) sepia(0%) saturate(194%) hue-rotate(212deg) brightness(89%) contrast(95%);
+}
+#search-close:hover {
+    filter: invert(15%) sepia(92%) saturate(3914%) hue-rotate(355deg) brightness(96%) contrast(86%);
+    cursor: pointer;
+}
+
+#search {
+    position: fixed;
+    top: 28px;
+    left: 310px;
+    border: none;          /* Remove borders */
+    background: transparent; /* Remove background color */
+    resize: none;          /* Disable resizing */
+    overflow: hidden;
+    width: 70%;           /* Set width as needed */
+    height: 20px;         /* Set height as needed */
+    padding: 0;           /* Remove padding if necessary */
+    margin: 0;            /* Remove margin if necessary */
+    color: var(--white);
+    font-size: 18px;
+    display: none;
+    outline: none;
+}
+
+#docs-content {
+    position: fixed;
+    display: inline-block;
+    top: 70px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+    overflow:scroll;
+    font-size: 24px;
+};
+
+coloradd {
+    display: inline;
+}
+
+a:visited {
+    color: var(--blue);
+    text-decoration: underline;
+}

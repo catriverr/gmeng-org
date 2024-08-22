@@ -3,6 +3,7 @@ import express from 'express';
 import {writeFileSync} from 'fs';
 import {existsSync, readFileSync, statSync, statfsSync} from 'fs';
 import { URL } from 'node:url'; // in Browser, the URL in native accessible on window
+import markdown, { getCodeString } from '@wcj/markdown-to-html';
 
 const __filename = new URL('', import.meta.url).pathname;
 // Will contain trailing slash
@@ -264,6 +265,35 @@ function main(argv = ['']) {
     server.get('/stats/:adminpassword', (req, res) => {
         if (req.params.adminpassword != server.settings.admin_pass) return res.status(401).send('unauthorized');
         res.status(200).send(JSON.stringify(server.create_stats_json()));
+    });
+
+    let styles_md = `
+pre, code {
+    display: inline-block;
+    width: fit-content;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 100px;
+    border-radius: 6px;
+    background-color: rgb(40, 40, 40);
+    max-width: 100%;
+}
+
+code {
+    display: inline;
+    padding: 0px 0px 0px 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}`;
+
+    server.get('/docs/:docid', (req, res) => {
+        let docid = req.params?.docid ?? 'menu';
+        let file = process.cwd() + '/docs/' + docid + '.md';
+        if (!existsSync(file)) return res.status(200).send(`
+<div style="text-align:center;"> No Content Found </div>
+            `);
+        return res.status(200).send(markdown(readFileSync(file,'utf-8')) + '\n!END-OF-FILE-MARKDOWN\n<style>a { color: var(--red2); }\na:visited { color: var(--yellow); }\n' + styles_md + '\n</style>');
     });
 };
 

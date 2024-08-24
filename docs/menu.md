@@ -11,7 +11,7 @@
 This project uses the [GNU Make](https://gnu.org/software/make) build system for an easy building process. Currently, Gmeng only runs on `Darwin (MacOS)` systems.
 
 ### Requirements
-```cmake
+```js
 Systems:
 - gnu-make
 - Node.JS 19.8.1 or later
@@ -51,17 +51,17 @@ refer to the [Unit Tests](tests/test.cpp) file to see different tests and what t
 
 For **Gmeng**'s command-line arguments, refer to the `help` page in the command-line interface via:
 
-```make
+```sh
 make; ./gmeng -help
 ```
 
 Gmeng takes the following preprocessor definitions:
 
-```make
-#define GMENG_NO_CURSES // false by default, for no ncurses imports, same as the make no-ncurses parameter
-#define __GMENG_LOG_TO_COUT__ // false by default, streams gm_log() calls to the std::cout stream.
-#define __GMENG_ALLOW_LOG__ // true by default, allows logging and errors
-#define __GMENG_DRAW_AFTER_LOG__ // false, by default draws the dev-c console
+```cpp
+#define GMENG_NO_CURSES false // false by default, for no ncurses imports, same as the make no-ncurses parameter
+#define __GMENG_LOG_TO_COUT__ false // false by default, streams gm_log() calls to the std::cout stream.
+#define __GMENG_ALLOW_LOG__ true // true by default, allows logging and errors
+#define __GMENG_DRAW_AFTER_LOG__ false // false, by default draws the dev-c console
 ```
 
 ## Contact

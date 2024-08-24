@@ -28,11 +28,11 @@ sb.onclick = function() {
     sb.style.objectPosition = "left";
     textarea.style.display = "inline";
     closebutton.style.display = "inline";
+    textarea.select();
 };
 
 closebutton.onclick = function() {
     sb_open = false;
-    textarea.value = "";
     textarea.style.display = "none";
     sb.style.pointerEvents = "all";
     sb.style.width = "20px";
@@ -123,53 +123,6 @@ setInterval(() => {
     };
 }, 150);
 
-
-let code_highlights = document.getElementsByTagName('pre');
-
-
-let language_keywords = [
-    {
-        check: (str) => str.endsWith(':'),
-        color: 'yellow'
-    },
-    {
-        check: (str) => str == 'make',
-        color: 'blue'
-    },
-    {
-        check: (str) => str == "#define",
-        color: 'cyan'
-    },
-    {
-        check: (str) => str.startsWith('__') || str.toLowerCase().includes('gmeng'),
-        color: 'orange'
-    },
-    {
-        check: (str) => str.startsWith('-D'),
-        color: 'yellow'
-    },
-    {
-        check: (str) => str.startsWith('--'),
-        color: 'blue'
-    },
-    {
-        check: (str) => str.toLowerCase().includes('error'),
-        color: 'red'
-    },
-    {
-        check: (str) => !str.includes('no') && (str.includes('homebrew') || str.includes('ncurses')),
-        color: 'orange'
-    },
-    {
-        check: (str) => ['gcc','stdcpp20','gnupp20','gnu-make', 'node.js', 'nodejs', 'npm', 'pkg-config', 'libcurl', 'applicationservices'].includes(str.toLowerCase()),
-        color: 'orange'
-    },
-    {
-        check: (str) => str == 'false' || str == 'true',
-        color: 'magenta'
-    }
-];
-
 function replaceAll(str, find, replace) {
 console.log(find, replace);
   return str.replace(new RegExp(find, 'g'), replace);
@@ -190,32 +143,57 @@ let colors = {
     gray: `#4E4E47;`,
 };
 
-let do_done_words = [];
-
 function update_code_highlighting() {
-    console.log(code_highlights.length, 0);
-    for (let i = 0; i < code_highlights.length; i++) {
-        console.log('highlighting_check:', i)
-        let dat = code_highlights.item(i);
-        language_keywords.forEach((checker, id) => {
-            code_highlights = document.getElementsByClassName('code-highlight');
-            let str = replaceAll(dat.innerText, '\n', ' ').split(' ');
-            str.forEach((val_,indx) => {
-                let val = replaceAll(val_.split('//')[0], ';', '');
-                if (checker.check(val)) {
-                    console.log('clrcheck hit ' + val, i, id);
-                    dat.innerHTML = replaceAll(dat.innerHTML, val, '<coloradd style="color: ' + (colors[checker.color] ?? checker.color) + '">' + val + '</coloradd>')
-                };
-            });
-        });
-        let ln = dat.innerHTML.split('\n');
-        ln.forEach((line,i) => {
-            if (line.includes('//')) {
-                let dline = line.replace('//', '<coloradd style="color:'+ colors.gray + '">//') + '</coloradd>';
-                ln[i] = dline;
-            };
-        });
-        dat.innerHTML = ln.join('\n');
-        console.log(ln[1]);
-    };
+    /// switched to server-side
+    hljs.highlightAll();
 };
+
+document.onkeypress = function(ev) {
+    if (ev.keyCode == 27 && sb_open) closebutton.click(); // close with escape
+};
+
+function setinput(str) {
+    textarea.value = str ?? '';
+};
+
+
+rb.onclick = function() {
+    closebutton.onclick();
+    let rm = document.getElementById('radiomenu');
+    let cnt = document.getElementById('docs-content');
+    rm.classList.toggle('active');
+    cnt.style.zIndex = '-1';
+    cnt.style.overflow = 'hidden';
+    cnt.style.opacity = '0.1';
+    cnt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+};
+
+let crm = document.getElementById('close-radio');
+
+crm.onclick = function() {
+    console.log('radio mama oh oh radio mama');
+    let rm = document.getElementById('radiomenu');
+    let cnt = document.getElementById('docs-content');
+    rm.classList.remove('active');
+    cnt.style.zIndex = '0';
+    cnt.style.overflow = 'scroll';
+    cnt.style.opacity = '1';
+    cnt.style.backgroundColor = 'var(--black2)';
+};
+
+let all_docs = [];
+
+function setinput_d(data) {
+    textarea.value = data;
+    crm.onclick();
+};
+
+http_get('https://gmeng.org/docs').then(value => {
+    all_docs = value.split(',');
+    let rm = document.getElementById('radiomenu');
+    rm.insertAdjacentHTML('beforeend', '<br>≫ <gdoc onclick="setinput_d(`menu`)">Homepage</gdoc>');
+    all_docs.forEach(j => {
+        if (j == 'menu') return;
+        rm.insertAdjacentHTML('beforeend', "<br>≫ <gdoc onclick=\"setinput_d('" + j + "')\">" + j + "</gdoc>");
+    });
+});

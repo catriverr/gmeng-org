@@ -8,6 +8,8 @@
     --black: rgb(40, 40, 40);
     --white: rgb(224,209,170);
     --blue: rgb(131, 165, 152);
+    --magenta: #D3869B;
+    --black3: rgb(80,80,80);
 }
 body {
     font-family: "Roboto", sans-serif;
@@ -87,7 +89,8 @@ body {
 }
 
 #search-button {
-    margin-right: 15px;
+    margin-right: 10px;
+    overflow: hidden;
 }
 
 #search-button:hover {
@@ -105,7 +108,7 @@ body {
     transition: 0.3s filter;
     margin-top: 10.5px;
     position: fixed;
-    right: 10px;
+    right: 70px;
     display: none;
     filter: invert(52%) sepia(0%) saturate(194%) hue-rotate(212deg) brightness(89%) contrast(95%);
 }
@@ -117,7 +120,7 @@ body {
 #search {
     position: fixed;
     top: 28px;
-    left: 310px;
+    left: 250px;
     border: none;          /* Remove borders */
     background: transparent; /* Remove background color */
     resize: none;          /* Disable resizing */
@@ -142,6 +145,7 @@ body {
     height: 100%;
     overflow:scroll;
     font-size: 24px;
+    transition: 0.7s all;
 };
 
 coloradd {
@@ -151,4 +155,119 @@ coloradd {
 a:visited {
     color: var(--blue);
     text-decoration: underline;
+}
+
+gmdocentry {
+    display: inline;
+    margin-left: 20px;
+    color: var(--magenta);
+    transition: 0.5s color;
+    box-sizing: border-box;
+}
+
+gmdocentry:hover {
+    text-decoration: underline;
+    color: #F7869B;
+    cursor: pointer;
+}
+
+docentrylist {
+    display:block;
+    font-weight: bold;
+    background-color: var(--black);
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+docentrytitle {
+    font-weight: bold;
+    font-size: 32px;
+    color: var(--red2);
+}
+
+#radio-button {
+    z-index: 502;
+    margin-right: 20px;
+    transition: 0.15s all;
+}
+
+.menubutton:hover {
+    opacity: 1;
+    background-color: var(--red2);
+    cursor: pointer;
+}
+
+#radiomenu {
+    z-index: 1;
+    position: fixed;
+    top: 10px;
+    right: -285px;
+    background-color: var(--black);
+    width:250px;
+    height: 100%;
+    transition: right 0.3s ease-in-out;
+    padding-left: 20px;
+    font-size: 24px;
+    border-left: 2px solid var(--black3);
+}
+
+#radiomenu.active {
+    right: 5px;
+}
+
+#docs-content {
+    z-index: 0;
+}
+
+
+
+#close-radio {
+    display: inline;
+    margin-top: 12px;
+    margin-right: 8px;
+    z-index: 5000;
+}
+
+gdoc {
+    z-index: -1;
+    display: inline;
+    color: var(--magenta);
+    transition: 0.3s color;
+}
+
+gdoc:hover {
+    text-decoration: underline;
+    color: #E96C7D;
+    cursor: pointer;
+}
+
+lnd {
+    display: block;
+    width: 100%;
+    height: 1px;
+    position:fixed;
+    margin-top: 29px;
+    margin-left: -20px;
+    border-top: 2px solid var(--black3);
+    box-sizing: border-box;
+}
+
+spff {
+    display: block;
+    height: 10px;
+    background-color: transparent;
+}
+
+mtitle {
+    position:fixed;
+    display: inline;
+    color: var(--red);
+    font-weight: bold;
+    font-size: 32px;
+    margin-top: 8px;
+    margin-left: 10px;
 }

@@ -1,10 +1,14 @@
 import chalk from 'chalk';
 import express from 'express';
-import {writeFileSync} from 'fs';
+import {readdirSync, writeFileSync} from 'fs';
 import {existsSync, readFileSync, statSync, statfsSync} from 'fs';
 import { URL } from 'node:url'; // in Browser, the URL in native accessible on window
 import markdown, { getCodeString } from '@wcj/markdown-to-html';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import hljs from 'highlight.js';
+import cpp from 'highlight.js/lib/languages/cpp';
+
+hljs.registerLanguage('cpp', cpp);
 
 
 const __filename = new URL('', import.meta.url).pathname;
@@ -294,13 +298,33 @@ code {
     padding-right: 5px;
 }`;
 
+let script_md = `
+`;
+
+server.get('/docs', (req, res) => {
+    let docs_all = readdirSync(process.cwd() + '/docs', 'utf-8');
+    res.status(200).send((docs_all.map(d=>d.slice(0,-3))).join(','));
+});
+
     server.get('/docs/:docid', (req, res) => {
         let docid = req.params?.docid ?? 'menu';
         let file = process.cwd() + '/docs/' + docid + '.md';
-        if (!existsSync(file)) return res.status(200).send(`
-<div style="text-align:center;"> No Content Found </div>
+        let docs_all = readdirSync(process.cwd() + '/docs', 'utf-8');
+        console.log(docs_all, docid);
+        let p = (docs_all.filter(j=>j.replace('.md','').toLowerCase().includes(docid.toLowerCase())));
+        if (p.length < 1 && !existsSync(file)) return res.status(200).send(`
+<div style="text-align:center;font-weight: bold;"> No Content Found </div>
             `);
-        return res.status(200).send(markdown(readFileSync(file,'utf-8')) + '\n!END-OF-FILE-MARKDOWN\n<style>a { color: var(--red2); }\na:visited { color: var(--yellow); }\n' + styles_md + '\n</style>');
+        if (!existsSync(file)) {
+            let fdata = p;
+            let html = `
+<docentrylist>
+    <docentrytitle>${p.length} Document${p.length > 1 ? 's' : ''} Found</docentrytitle><br>
+    ${fdata.map(f=>`≫ <gmdocentry onclick="setinput('${f.replace('.md','')}')">${ f.replace('.md', '') }</gmdocentry>`).join('<br>')}
+</docentrylist>
+`;
+            res.status(200).send(html);
+        } else return res.status(200).send(markdown(readFileSync(file,'utf-8')) + '\n!END-OF-FILE-MARKDOWN\n<style>a { color: var(--red2); }\na:visited { color: var(--yellow); }\n' + styles_md + '\n</style>\n' + script_md + '');
     });
     server.get('/git', (req, res) => {
         res.redirect('https://github.com/catriverr/gmeng-sdk');

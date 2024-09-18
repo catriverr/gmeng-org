@@ -31,7 +31,7 @@ static void _func_annot(const char* func, const char* info) {
 
 #define __functree_init__() if (!Gmeng::functree_init) Gmeng::funclog << "-- cleared previous log --\n~~GMENG_FUNCTREE~~\n*** This file is used for diagnostics ***\n", Gmeng::functree_init = true
 
-static void _functree_vl(char* file, int line, const char* func) {
+static void _functree_vl(char* file, int line, const char* func, char* pretty_func) {
     if (!Gmeng::functree_enabled) return;
     if (!Gmeng::functree_init) __functree_init__();
     std::string func_annot = "";
@@ -43,7 +43,7 @@ static void _functree_vl(char* file, int line, const char* func) {
     Gmeng::func_last.push_back(dat);
 };
 
-#define __functree_call__(file, line, func) _functree_vl(file, line, vl_get_name(func))
+#define __functree_call__( func) _functree_vl(__FILE__, __LINE__, vl_get_name(func), __PRETTY_FUNCTION__)
 ```
 
 The Functree will also log annotations for functree calls with `__annot__(char* func, char*)`
@@ -55,10 +55,10 @@ You can call the macro from your methods to register it is a functree tracked me
 ```cpp
 int main(int argc, char** argv) {
     __annot__(main, 'entry point to my program');
-    __functree_call__(__FILE__, __LINE__, main);
+    __functree_call__(main);
 };
 ```
 
-set `Gmeng::functree\_enabled` to `false` to disable this system.
+set `Gmeng::functree_enabled` to `false` to disable this system.
 
 <br>

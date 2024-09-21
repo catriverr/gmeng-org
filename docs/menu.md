@@ -56,7 +56,7 @@ Gmeng is designed and configured to be debugged with the `llvm/lldb` debugger. T
 make test2; lldb ./tests/out/test.o
 ```
 to run different tests, add the `-l=0,1,2,3..8` flag to the `run` command in lldb.
-refer to the [Unit Tests](tests/test.cpp) file to see different tests and what they do.
+refer to the [Unit Tests](git/tree/main/tests/test.cpp) file to see different tests and what they do.
 
 ## Flags & Command-line Arguments
 For **Gmeng**'s command-line arguments, refer to the `help` page in the command-line interface via:

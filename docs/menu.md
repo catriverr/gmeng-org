@@ -1,6 +1,6 @@
 <p align="center">
-    <img style="max-width: 300px;" src="https://allahcorp.com/static/assets/gmeng-more-hd.png">
-    <p3>A Powerful, Terminal-Based 2D Game Engine written in C++.</p3>
+    <img style="max-width: 900px;" src="https://allahcorp.com/static/assets/gmeng-more-hd.png">
+    <br><p3>A Powerful, Terminal-Based 2D Game Engine written in C++.</p3>
 </p>
 
 <p align="center">

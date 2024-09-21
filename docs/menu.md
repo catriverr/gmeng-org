@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://allahcorp.com/static/assets/gmeng-more-hd.png">
+    <img style="max-width: 300px;" src="https://allahcorp.com/static/assets/gmeng-more-hd.png">
     <p3>A Powerful, Terminal-Based 2D Game Engine written in C++.</p3>
 </p>
 

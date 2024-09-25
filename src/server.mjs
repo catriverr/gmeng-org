@@ -301,6 +301,10 @@ code {
 let script_md = `
 `;
 
+server.get('/', (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+});
+
 server.get('/docs', (req, res) => {
     let docs_all = readdirSync(process.cwd() + '/docs', 'utf-8');
     res.status(200).send((docs_all.map(d=>d.slice(0,-3))).join(','));

@@ -4,9 +4,87 @@ let assets = {
     'logo-url': 'https://raw.githubusercontent.com/catriverr/gmeng-sdk/main/assets/readme-logo.png'
 };
 
-document.getElementById('logo-clicks').onclick = function() {
-    window.location = '/';
+ let page_list = document.createElement('div');
+    page_list.setAttribute("id", "page_list");
+    page_list.innerHTML = `
+<div class="pagebutton" id="home_go">
+<img class="pageico" src="assets/home.svg"> Homepage
+</div>
+
+<div class="pagebutton" id="changelog_go">
+<img class="pageico" src="assets/clock.svg"> Changelog
+</div>
+
+<div class="pagebutton" id="report_go">
+<img class="pageico" src="assets/warning.svg"> File Report
+</div>
+
+<hr>
+
+<div class="pagebutton" id="examples_go">
+<img class="pageico" src="assets/book.svg"> Examples
+</div>
+
+<div class="pagebutton" id="goals_go">
+<img class="pageico" src="assets/flag.svg"> Goals
+</div>
+    `;
+document.body.appendChild(page_list);
+let ovr = false;
+
+document.getElementById("home_go").onclick = function() {
+    window.location = "/";
 };
+
+document.getElementById("examples_go").onclick = function() {
+    window.location = "/examples";
+};
+
+document.getElementById("report_go").onclick = function() {
+    window.location = "/report";
+};
+
+document.getElementById("goals_go").onclick = function() {
+    window.location = "/goals";
+};
+
+document.getElementById("changelog_go").onclick = function() {
+    window.location = "/changelog";
+};
+
+document.getElementById('logo-clicks').onmouseover = function() {
+    ovr = true;
+    let d_pg = document.getElementById('page_list');
+    d_pg.style.display = "block";
+    d_pg.style.top = "65px";
+    console.log('PAGES MENU OPEN');
+};
+
+let never_entered = true;
+
+document.getElementById('page_list').onmouseover = () => {
+    ovr = true;
+    never_entered = false;
+};
+
+
+document.getElementById('page_list').onmouseleave = () => {
+    ovr = false;
+    never_entered = true;
+    let d_pg = document.getElementById('page_list');
+    d_pg.style.display = "none";
+    d_pg.style.top = "-100px";
+    console.log('PAGES MENU CLOSE');
+};
+
+document.getElementById('logo-clicks').onmouseleave = function() {
+    if (ovr || !never_entered) return;
+    let d_pg = document.getElementById('page_list');
+    d_pg.style.display = "none";
+    d_pg.style.top = "-100px";
+    console.log('PAGES MENU CLOSE');
+};
+
 
 let sb = document.getElementById('search-button');
 let rb = document.getElementById('radio-button');
@@ -101,6 +179,17 @@ let curintvl = null;
 
 function chng(path) {
     let d = 'https://gmeng.org/docs/' + path;
+    let intvl = load();
+    curintvl = intvl;
+    http_get(d).then(data => {
+        clearInterval(intvl);
+        console.log(data);
+        set_current_doc(data);
+    });
+};
+
+function chng_raw(path) {
+    let d = path;
     let intvl = load();
     curintvl = intvl;
     http_get(d).then(data => {

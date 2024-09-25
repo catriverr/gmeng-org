@@ -7,6 +7,7 @@ import markdown, { getCodeString } from '@wcj/markdown-to-html';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import hljs from 'highlight.js';
 import cpp from 'highlight.js/lib/languages/cpp';
+import path from 'path';
 
 hljs.registerLanguage('cpp', cpp);
 
@@ -273,6 +274,8 @@ function main(argv = ['']) {
     REM('server', 'starting ' + chalk.bold.blue('gmeng.org') + '...');
     server.start();
     REM('server', 'server_active 1');
+    server.app.use('/use-cases', express.static(__dirname + '/../examples'));
+
     server.get('/stats/:adminpassword', (req, res) => {
         if (req.params.adminpassword != server.settings.admin_pass) return res.status(401).send('unauthorized');
         res.status(200).send(JSON.stringify(server.create_stats_json()));
@@ -302,8 +305,24 @@ let script_md = `
 `;
 
 server.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+    res.sendFile(path.resolve(__dirname + "/../public/index.html"));
 });
+
+server.get('/examples', (req, res) => {
+    res.sendFile(path.resolve(__dirname + "/../public/examples.html"));
+});
+
+server.get('/report', (req, res) => {
+    res.sendFile(path.resolve(__dirname + "/../public/report.html"));
+});
+
+server.get('/changelog', (req, res) => {
+    res.sendFile(path.resolve(__dirname + "/../public/changelog.html"));
+});
+
+server.get('/goals', (req, res) => {
+    res.sendFile(path.resolve(__dirname + "/../public/goals.html"));
+})
 
 server.get('/docs', (req, res) => {
     let docs_all = readdirSync(process.cwd() + '/docs', 'utf-8');

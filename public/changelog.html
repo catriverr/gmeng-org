@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <div id="mainbar">
+            <div id="gradient"></div>
+            <div id="bar-container">
+              <div id="logo-clicks">
+                <img id="logo-short" src="assets/gmeng-short.png">
+                <div id="logo-text">Changelog</div>
+              </div>
+              <div id="menu-buttons">
+                  <div id="menubutton-container">
+                    <img class="menubutton" id="radio-button" src="assets/menu.png">
+                    <img class="menubutton" id="search-button" src="assets/search.png">
+                    <textarea rows="1" id="search" placeholder="Search the Gmeng Documentation..."></textarea>
+                    <img id="search-close" src="assets/close.svg">
+                  </div>
+                </div>
+                <div id="radiomenu">
+                    <mtitle>Documents</mtitle>
+                    <img class="menubutton" id="close-radio" src="assets/close-gray.svg">
+                    <br><lnd id="lspl"></lnd><spff>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div id="report-pg">
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+    </body>
+</html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/gruvbox-dark-medium.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script src="index.js"></script>
+
+<script>
+
+    function parse_markdown(div_id) {
+            // Get the div element by ID
+            const div = document.getElementById(div_id);
+            if (div) {
+                // Get the Markdown content
+                const markdownText = div.innerText;
+                // Convert the Markdown to HTML using Marked.js
+                const htmlContent = marked.parse(markdownText);
+                // Set the HTML content back to the div
+                div.innerHTML = htmlContent;
+            }
+        }
+
+    http_get("https://raw.githubusercontent.com/catriverr/gmeng-sdk/refs/heads/main/CHANGELOG.md").then(data=> {
+        let div__ = document.getElementById("report-pg");
+        div__.innerHTML = data.replaceAll("\n", "<br>\n");
+        parse_markdown("report-pg");
+        div__.innerHTML = "<br>"  + div__.innerHTML;
+        update_code_highlighting();
+    });
+
+</script>

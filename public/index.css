@@ -16,6 +16,62 @@ body {
     background-color: var(--black2);
     color: var(--white);
 }
+body::after {
+    transition: 0.7s all;
+}
+
+hr {
+    color: var(--white);
+}
+
+#page_list {
+    display: none;
+    background-color: var(--black);
+    width: 175px;
+    position: fixed;
+    top: -100px;
+    left: 0px;
+    transition: 0.15s all;
+    padding: 5px;
+    padding-bottom: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#report-pg {
+    font-size: 24px;
+}
+
+#changelog_go:hover, #home_go:hover, #examples_go:hover, #report_go:hover, #goals_go:hover {
+    color: var(--yellow);
+    cursor: pointer;
+}
+
+.pageico {
+    width: 25px;
+    filter: invert(18%) sepia(74%) saturate(3500%) hue-rotate(354deg) brightness(98%) contrast(87%);
+    margin-right: 5px;
+}
+
+.pagebutton {
+    z-index: 100000000000000;
+    display: flex;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: var(--black3);
+    transition: 0.15s all;
+    width: 150px;
+    height: 30px;
+    padding-left: 25px;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 5px;
+};
+
+.pagebutton:hover > * {
+    cursor: pointer;
+    background-color: var(--black2);
+}
 
 #bar-container {
     vertical-align: middle;
@@ -48,9 +104,12 @@ body {
     text-decoration: inherit;
 }
 
+#logo-text:hover {
+    text-decoration: underline;
+}
+
 #logo-clicks:hover {
     cursor: pointer;
-    text-decoration: underline;
 }
 
 #gradient {

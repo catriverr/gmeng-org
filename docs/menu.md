@@ -13,7 +13,7 @@
 This project uses the [**GNU Make**](https://www.gnu.org/software/make/) build system for an easy building process. Currently, Gmeng only runs on `Darwin (MacOS)` systems.
 
 ### Requirements
-```cmake
+```make
 Systems:
 - gnu-make
 - Node.JS 19.8.1 or later

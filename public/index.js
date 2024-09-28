@@ -137,7 +137,7 @@ let search = new URLSearchParams(site_url.search);
 
 let requested_doc = search.get('doc');
 
-if (requested_doc.length > 0) curtextarea = requested_doc;
+if (requested_doc != null && requested_doc.length > 0) curtextarea = requested_doc;
 
 function set_current_doc(html) {
     let d = document.getElementById('docs-content');

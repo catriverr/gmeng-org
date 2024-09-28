@@ -132,6 +132,13 @@ window.onresize = function() {
 
 let curtextarea = "____NULL_______$$$.#";
 
+let site_url = new URL(window.location.href);
+let search = new URLSearchParams(site_url.search);
+
+let requested_doc = search.get('doc');
+
+if (requested_doc.length > 0) curtextarea = requested_doc;
+
 function set_current_doc(html) {
     let d = document.getElementById('docs-content');
     d.innerHTML = html;
@@ -197,6 +204,7 @@ function chng_raw(path) {
         console.log(data);
         set_current_doc(data);
     });
+    window.history.replaceState( {}, '', '/?doc=' + encodeURI(path));
 };
 
 setInterval(() => {
@@ -237,8 +245,25 @@ function update_code_highlighting() {
     hljs.highlightAll();
 };
 
+let RADIOMENU_OPEN = false;
+
+let crm = document.getElementById('close-radio');
+
+crm.onclick = function() {
+    console.log('radio mama oh oh radio mama');
+    let rm = document.getElementById('radiomenu');
+    let cnt = document.getElementById('docs-content');
+    rm.classList.remove('active');
+    cnt.style.zIndex = '0';
+    cnt.style.overflow = 'scroll';
+    cnt.style.opacity = '1';
+    cnt.style.backgroundColor = 'var(--black2)';
+    RADIOMENU_OPEN = false;
+};
+
 document.onkeypress = function(ev) {
     if (ev.keyCode == 27 && sb_open) closebutton.click(); // close with escape
+    else if (ev.keyCode == 27 && RADIOMENU_OPEN) crm.click();
 };
 
 function setinput(str) {
@@ -255,20 +280,11 @@ rb.onclick = function() {
     cnt.style.overflow = 'hidden';
     cnt.style.opacity = '0.1';
     cnt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+    RADIOMENU_OPEN = true;
 };
 
-let crm = document.getElementById('close-radio');
 
-crm.onclick = function() {
-    console.log('radio mama oh oh radio mama');
-    let rm = document.getElementById('radiomenu');
-    let cnt = document.getElementById('docs-content');
-    rm.classList.remove('active');
-    cnt.style.zIndex = '0';
-    cnt.style.overflow = 'scroll';
-    cnt.style.opacity = '1';
-    cnt.style.backgroundColor = 'var(--black2)';
-};
+
 
 let all_docs = [];
 
@@ -276,6 +292,7 @@ function setinput_d(data) {
     textarea.value = data;
     crm.onclick();
 };
+
 
 http_get('https://gmeng.org/docs').then(value => {
     all_docs = value.split(',');

@@ -132,13 +132,6 @@ window.onresize = function() {
 
 let curtextarea = "____NULL_______$$$.#";
 
-let site_url = new URL(window.location.href);
-let search = new URLSearchParams(site_url.search);
-
-let requested_doc = search.get('doc');
-
-if (requested_doc != null && requested_doc.length > 0) curtextarea = requested_doc;
-
 function set_current_doc(html) {
     let d = document.getElementById('docs-content');
     d.innerHTML = html;
@@ -194,6 +187,17 @@ function chng(path) {
         set_current_doc(data);
     });
 };
+
+let site_url = new URL(window.location.href);
+let search = new URLSearchParams(site_url.search);
+
+let requested_doc = search.get('doc');
+
+if (requested_doc != null && requested_doc.length > 0) {
+    textarea.value = curtextarea = requested_doc;
+    chng(requested_doc);
+};
+
 
 function chng_raw(path) {
     let d = path;

@@ -10,6 +10,7 @@
     --blue: rgb(131, 165, 152);
     --magenta: #D3869B;
     --black3: rgb(80,80,80);
+    --black4: rgb(100, 100, 100);
 }
 body {
     font-family: "Roboto", sans-serif;
@@ -22,6 +23,128 @@ body::after {
 
 hr {
     color: var(--white);
+}
+
+code {
+    background-color: var(--black);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--black3);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    transition: 0.3s all;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--black4);
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+quotespace {
+    display: block;
+    height: 1px;
+}
+
+blockquote {
+    display:block;
+    max-width: 850px;;
+    width: fit-content;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    padding-left: 10px;
+    border-left: 5px solid var(--black4);
+    font-size: 22px;
+    transition: 0.3s border-left;
+}
+
+desc {
+    margin-top: 0px;
+    font-size: 18px;
+}
+
+
+bold {
+    font-weight: bold;
+}
+
+underlined {
+    text-decoration: underline;
+}
+
+italic {
+    font-style: italic;
+}
+
+.example {
+    border-left: 5px solid var(--yellow);
+    transition: 0.3s border-left, 0.3s background-color;
+}
+
+#example-container {
+    max-width: 54%;
+    display: inline-block;
+}
+
+#content-container {
+    z-index: -1000000;
+    position: fixed;
+    top: 70px;
+    left: 54%;
+    height: 89.5%;
+    display: inline-block;
+    border-left: 2px solid var(--black4);
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+pretty.example:hover {
+    cursor: pointer;
+    background-color: var(--black3);
+    border-left: 5px solid var(--blue);
+}
+
+splitter {
+    display: block;
+    height: 10px;
+}
+
+pretty {
+    display: inline-block;
+    max-width: 800px;
+    width: fit-content;
+    border-left: 5px solid var(--white);
+    padding-left: 10px; padding-right: 10px;
+    background-color: var(--black);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 20px;
+    padding-bottom: 2.5px;
+}
+
+blockquote:hover {
+    border-left: 5px solid var(--white);
 }
 
 #page_list {
@@ -198,7 +321,6 @@ hr {
     position: fixed;
     display: inline-block;
     top: 70px;
-    text-align: left;
     width: 100%;
     box-sizing: border-box;
     height: 100%;

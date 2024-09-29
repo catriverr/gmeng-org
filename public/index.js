@@ -186,6 +186,7 @@ function chng(path) {
         console.log(data);
         set_current_doc(data);
     });
+    window.history.replaceState( {}, '', '/?doc=' + encodeURI(path));
 };
 
 let site_url = new URL(window.location.href);

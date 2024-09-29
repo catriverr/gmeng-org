@@ -33,22 +33,27 @@ document.body.appendChild(page_list);
 let ovr = false;
 
 document.getElementById("home_go").onclick = function() {
+    window.history.replaceState({}, '', '/');
     window.location = "/";
 };
 
 document.getElementById("examples_go").onclick = function() {
+    window.history.replaceState({}, '', '/examples');
     window.location = "/examples";
 };
 
 document.getElementById("report_go").onclick = function() {
+    window.history.replaceState({}, '', '/report');
     window.location = "/report";
 };
 
 document.getElementById("goals_go").onclick = function() {
+    window.history.replaceState({}, '', '/goals');
     window.location = "/goals";
 };
 
 document.getElementById("changelog_go").onclick = function() {
+    window.history.replaceState({}, '', '/changelog');
     window.location = "/changelog";
 };
 

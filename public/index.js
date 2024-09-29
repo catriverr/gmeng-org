@@ -191,7 +191,13 @@ function chng(path) {
         console.log(data);
         set_current_doc(data);
     });
-    window.history.replaceState( {}, '', '/?doc=' + encodeURI(path));
+    if (![
+        "https://gmeng.org/changelog",
+        "https://gmeng.org/report",
+        "https://gmeng.org/goals",
+        "https://gmeng.org/examples"
+    ].includes(window.location.href))
+        window.history.replaceState( {}, '', '/?doc=' + encodeURI(path));
 };
 
 let site_url = new URL(window.location.href);
